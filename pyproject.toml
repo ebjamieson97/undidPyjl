@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "undidPyjl"
+version = "0.0.0"
+description = "Python wrapper for Undid.jl."
+authors = [{ name = "Eric Jamieson", email = "ericjamieson@cmail.carleton.ca" }]
+readme = "README.md"
+license = { text = "MIT" }
+dependencies = [
+    "juliacall>=0.9.20"
+]
