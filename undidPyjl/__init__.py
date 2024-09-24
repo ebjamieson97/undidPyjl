@@ -1,5 +1,7 @@
 # undidPyjl/__init__.py
 
-from .module1 import some_function
+from .julia_management import another_function
+from .wrappers import some_function
+from .plotting import plot_parallel_trends
 
-__all__ = ['some_function']
+__all__ = ['some_function', 'another_function', 'plot_parallel_trends']
