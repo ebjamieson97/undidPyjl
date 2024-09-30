@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='undidPyjl', 
-    version='0.0.0',  
+    version='0.1.2',  
     description='Python wrapper for Undid.jl.',  
     long_description=open('README.md').read(),  
     long_description_content_type='text/markdown',  

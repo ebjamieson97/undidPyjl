@@ -4,11 +4,15 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "undidPyjl"
-version = "0.0.0"
+version = "0.1.2"
 description = "Python wrapper for Undid.jl."
 authors = [{ name = "Eric Jamieson", email = "ericjamieson@cmail.carleton.ca" }]
 readme = "README.md"
+keywords = ["julia", "wrapper", "undid", "difference-in-differences", "unpoolable", "siloed-data"]
 license = { text = "MIT" }
 dependencies = [
-    "juliacall>=0.9.20"
+    "juliacall>=0.9.20",
+    "pandas>=1.2.4,<2.0",
+    "numpy>=1.20.3,<1.23.0",
+    "matplotlib>=3.4.0,<3.6"
 ]

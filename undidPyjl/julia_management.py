@@ -46,5 +46,23 @@ def checkundidversion():
     """)  
 
     newest_version = jl.seval("newest_version")
+    newest_version = newest_version.replace('"', '') 
 
     print(f"Currently installed version of Undid.jl is: {current_Undid_version} \nLatest version of Undid.jl is: {newest_version} \nConsider running command `updateundid()` if installed version is out of date.")
+
+# Updates Undid.jl to the latest version
+def updateundid():
+    """
+    Updates Undid.jl to the latest version.
+    This may take a minute or so depending on network and system conditions.
+    """
+    jl.seval("""
+    using Pkg
+    try 
+        Pkg.rm("Undid")
+        Pkg.add(url="https://github.com/ebjamieson97/Undid.jl")
+    catch e
+        Pkg.add(url="https://github.com/ebjamieson97/Undid.jl")
+    end
+    """)
+    print("Done updating Undid.jl.")
