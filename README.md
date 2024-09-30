@@ -324,6 +324,7 @@ df = stagethree.plot_parallel_trends("C:\\Users\\User\\Filled Trends Data",
     treated_colour = "red",
     treatment_indicator_linewidth = 1.5) 
 ```
+![Simple undid plot](./images/undid_plot_simple.png)
 
 ## Appendix
 
