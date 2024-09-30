@@ -185,6 +185,8 @@ stagethree.undid_stage_three(dir_path = "C:\\Users\\User\\Filled Diff Data")
 #### 7. `plot_parallel_trends()` - Returns a Pandas dataframe of trends data and a shows a plot
 The `plot_parallel_trends()` function combines the `trends_data.csv`'s and plots parallel trends figures. There are a plethora of options for this function. Many parameters are inherited from `matplotlib`.
 
+Of particular note is that the `date_format` parameter in `plot_parallel_trends()` inherits the date format options from `matplotlib.dates`, and consequently `date_format` should take in a typical `matplotlib` format type such as "%Y-%m-%d". 
+
 There are controls for tick marks, titles, line width, labels, colours, legend options, and more.
 
 **Parameters:**
