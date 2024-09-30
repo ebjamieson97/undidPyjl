@@ -71,8 +71,87 @@ Ensure that dates are all entered in the same date format, a list of acceptable 
 #### Example
 ```python
 from undidPyjl import stageone as stageone
-stageone.create_init_csv(["QC", "ON"], ["2000","2000"], ["2019","2019"], ["control","2010"])
+stageone.create_init_csv(silo_names = ["71", "73"], 
+start_times = ["1989","1989"],
+end_times = ["2000","2000"], 
+treatment_times = ["1991","control"])
 ```
+
+#### 4. `create_diff_df()` - Returns a filepath and a Julia dataframe
+Generates the `empty_diff_df.csv` file. The `empty_diff_df.csv` file is sent to each silo in order to be filled out.
+
+Covariates may be specified when calling `create_init_csv()` or when calling `create_diff_df()`.
+
+**Parameters:**
+
+- **filepath** (*str*):  
+  Filepath to the `init.csv` file that was previously created.
+
+- **date_format** (*str*):  
+  The date format used in the `init.csv` file (e.g., `"YYYY-MM-DD"` for all possible formats see [here](#valid-date-formats)).
+
+- **freq** (*str*):  
+  Frequency of the data to be considered for analysis at each silo. Options are `"daily"`, `"weekly"`, `"monthly"`, or `"yearly"`.
+
+- **covariates** (*list of str or bool, optional*):  
+  A list of strings specifying covariates for each silo, or `False` to use the covariates specified in the `init.csv` file. Defaults to `False`.
+
+- **freq_multiplier** (*int or bool, optional*):  
+  An integer to multiply the `freq` argument by, to handle intervals larger than the base frequency. For example, for biweekly data, set `freq="weekly"` and `freq_multiplier=2`. Defaults to `False`.
+
+#### Example 
+```python
+from undidPyjl import stageone as stageone
+stageone.create_diff_df("c:\\Users\\User\\Documents\\Project Files\\init.csv",
+date_format = "yyyy", freq = "yearly")
+```
+
+## Stage Two: Silo
+
+#### 5. `undid_stage_two()` - Prints filepaths and returns Julia dataframes
+The `undid_stage_two()` function uses date information from the `empty_diff_df.csv` and the local silo data to fill in the necessary diff_estimates.
+
+Ensure that the `local_silo_name` reflects the spelling of the silo in the `empty_diff_df.csv` file. Likewise, ensure that the covariates specified in the `empty_diff_df.csv` are spelled the same in the local silo data.
+
+Also be sure that the `time_column` contains only `string` values. This is in order to enable passing data back and forth between Julia and R. 
+
+**Parameters:**
+
+- **filepath** (*str*):  
+  Filepath to the `empty_diff_df.csv` file.
+
+- **silo_name** (*str*):  
+  Name of the silo being analyzed, as it is spelled in the `empty_diff_df.csv`.
+
+- **silo_data** (*pandas.DataFrame*):  
+  A pandas DataFrame containing the data for the specific silo.
+
+- **time_column** (*str*):  
+  The name of the column in `silo_data` that contains date values. This column should contain date strings whose format is specified by `date_format`.
+
+- **outcome_column** (*str*):  
+  The name of the column in `silo_data` that contains the outcome variable for the analysis.
+
+- **date_format** (*str*):  
+  The format of the dates in the `time_column` (e.g., `"YYYY/MM/DD"`).
+
+- **consider_covariates** (*bool, optional*):  
+  Whether to consider the covariates specified in the `empty_diff_df.csv` during the analysis. Defaults to `True`. Consider setting to `False` if the specified covariates do not exist in the local silo data.
+
+#### Example
+```python
+import pandas as pd
+from undidPyjl import stagetwo as stagetwo
+local_silo_data = pd.read_stata("C:\\Users\\User\\Local Data\\State71.dta")
+filepath = "C:\\Users\\User\\Downloads\\empty_diff_df.csv"
+stagetwo.undid_stage_two(filepath = filepath, silo_name = "71",
+silo_data = local_silo_data, time_column = "year", outcome_column = "coll",
+date_format = "yyyy") 
+```
+
+## Stage Three: Analysis
+
+#### 6. `undid_stage_three()` - 
 
 ## Appendix
 
