@@ -22,7 +22,7 @@ python setup.py install
 - numpy >=1.20.3, <1.23.0
 - matplotlib >=3.4.0, <3.6
 
-### Utility Functions: For managing the Undid.jl package for Julia from Python.
+### Utility Functions: For managing the Undid.jl package for Julia from Python
 
 #### 1. `checkundidversion()`
 Checks the version of Undid.jl currently installed in Julia. If it is not installed, installs the most recent version from https://github.com/ebjamieson97/Undid.jl.
