@@ -2,7 +2,7 @@
 Difference-in-differences for unpoolable data. Python wrapper for Undid.jl.
 
 ## Installation
-**Option 1 (recommended): Install from PyPI**
+**Option 1 (recommended): Install from [PyPI](https://pypi.org/project/undidPyjl/)**
 ```bash
 pip install undidPyjl
 ```
