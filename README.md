@@ -151,7 +151,179 @@ date_format = "yyyy")
 
 ## Stage Three: Analysis
 
-#### 6. `undid_stage_three()` - 
+#### 6. `undid_stage_three()` - Returns Julia dataframe of results and saves as `UNDID_results.csv`
+The `undid_stage_three()` function combines the `filled_diff_df.csv`'s and computes the aggregate ATT by silo, gvar, or (g,t).
+
+**Parameters:**
+
+- **dir_path** (*str*):  
+  Filepath to the directory containing all of the `filled_diff_df.csv` files.
+
+- **agg** (*str, optional*):  
+  Specifies the aggregation method. Options are:
+  - `"silo"` (default): Aggregates by silo.
+  - `"g"`: Aggregates by group.
+  - `"gt"`: Aggregates by group and time.
+
+- **covariates** (*bool, optional*):  
+  Whether to consider covariates in the analysis. Defaults to `False`.
+
+- **save_csv** (*bool, optional*):  
+  Whether to save the combined `combined_diff_df.csv` file after aggregation. Defaults to `False`.
+
+- **interpolation** (*str or bool, optional*):  
+  Specifies how to handle missing values in the `filled_diff_df.csv` files. Options are:
+  - `False` (default): No interpolation.
+  - `"linear_function"`: Performs linear interpolation and extrapolation to fill in missing values.
+
+#### Example
+```python
+from undidPyjl import stagethree as stagethree
+stagethree.undid_stage_three(dir_path = "C:\\Users\\User\\Filled Diff Data")
+```
+
+#### 7. `plot_parallel_trends()` - Returns a Pandas dataframe of trends data and a shows a plot
+The `plot_parallel_trends()` function combines the `trends_data.csv`'s and plots parallel trends figures. There are a plethora of options for this function. Many parameters are inherited from `matplotlib`.
+
+There are controls for tick marks, titles, line width, labels, colours, legend options, and more.
+
+**Parameters:**
+
+- **dir_path** (*str*):  
+  Filepath to the folder containing the `trends_data.csv` files.
+
+- **covariates** (*bool, optional*):  
+  If set to true, plots the outcome variable residualized by covariates. Defaults to `False`.
+
+- **save_csv** (*bool, optional*):  
+  Whether to save the combined trends data as a .csv file. Defaults to `False`.
+
+- **combine** (*bool, optional*):  
+  Whether to combine all control silos and treated silos. Defaults to `False`.
+
+- **figsize** (*tuple, optional*):  
+  Size of the plot figure, in the format (width, height). Defaults to (10, 5).
+
+- **control_colour** (*str or list of str, optional*):  
+  Colour(s) for the control group. Can be a single string or a list of two strings to create a gradient. Defaults to `["#D3D3D3", "#4D4D4D"]`.
+
+- **treated_colour** (*str or list of str, optional*):  
+  Colour(s) for the treated group. Can be a single string or a list of two strings to create a gradient. Defaults to `["#F08080", "#800020"]`.
+
+- **control_color** (*str or None, optional*):  
+  Overrides `control_colour` if provided. Defaults to `None`. 
+
+- **treated_color** (*str or None, optional*):  
+  Overrides `treated_colour` if provided. Defaults to `None`. 
+
+- **linewidth** (*int, optional*):  
+  Line width for the plot lines. Defaults to `2`.
+
+- **title** (*str or None, optional*):  
+  Title of the plot. Defaults to `None`.
+
+- **xlabel** (*str or None, optional*):  
+  Label for the x-axis. Defaults to `None`.
+
+- **ylabel** (*str or None, optional*):  
+  Label for the y-axis. Defaults to `None`.
+
+- **title_fontdict** (*dict or None, optional*):  
+  Dictionary of font properties for the title. Defaults to `None`.
+
+- **title_loc** (*str, optional*):  
+  Location of the title. Defaults to `"center"`.
+
+- **title_pad** (*float or None, optional*):  
+  Padding between the title and the plot. Defaults to `None`.
+
+- **xlabel_fontdict** (*dict or None, optional*):  
+  Dictionary of font properties for the x-axis label. Defaults to `None`.
+
+- **ylabel_fontdict** (*dict or None, optional*):  
+  Dictionary of font properties for the y-axis label. Defaults to `None`.
+
+- **xlabel_pad** (*float or None, optional*):  
+  Padding between the x-axis label and the plot. Defaults to `None`.
+
+- **ylabel_pad** (*float or None, optional*):  
+  Padding between the y-axis label and the plot. Defaults to `None`.
+
+- **ylim** (*tuple or None, optional*):  
+  Limits for the y-axis. Defaults to `None`.
+
+- **yticks** (*list or None, optional*):  
+  List of y-axis ticks. Defaults to `None`.
+
+- **yticksize** (*int, optional*):  
+  Font size for the y-axis ticks. Defaults to `10`.
+
+- **xticks** (*list or None, optional*):  
+  List of x-axis ticks. Can be date objects or strings (use `date_format` for strings). Defaults to `None`.
+
+- **xticksize** (*int, optional*):  
+  Font size for the x-axis ticks. Defaults to `10`.
+
+- **date_format** (*str, optional*):  
+  Date format for x-axis ticks. Defaults to `"%Y"`. It should be noted that this using the formatting options inherited from `matplotlib.dates`, i.e. in the general format of "%Y-%m-%d".
+  Any other date arguments entered as strings to `plot_parallel_trends()` should be entered in the `date_format` specified here.
+
+- **legend_loc** (*str, optional*):  
+  Location of the legend. Defaults to "best".
+
+- **legend_fontsize** (*int, optional*):  
+  Font size for the legend. Defaults to `12`.
+
+- **legend_on** (*bool, optional*):  
+  Whether to display the legend. Defaults to `True`.
+
+- **treatment_indicator_col** (*str, optional*):  
+  Colour of the treatment indicator lines. Defaults to `"grey"`.
+
+- **treatment_indicator_linestyle** (*str, optional*):  
+  Line style for the treatment indicator lines. This parameter inherits the available options from the `linestyle` argument in `matplotlib.pyplot.axvline()`.  
+  Common options include:
+  - `'-'` (solid line)
+  - `'--'` (dashed line)
+  - `'-.'` (dash-dot line)
+  - `':'` (dotted line)  
+  Defaults to `"--"`.
+
+- **treatment_indicator_linewidth** (*float, optional*):  
+  Line width for the treatment indicator lines. Defaults to `1`.
+
+- **treatment_indicator_alpha** (*float, optional*):  
+  Transparency for the treatment indicator lines. Defaults to `0.5`.
+
+- **xlim** (*tuple or None, optional*):  
+  Limits for the x-axis, as date objects or strings (specify the `date_format` for strings). Defaults to `None`.
+
+- **savefig** (*bool, optional*):  
+  Whether to save the plot as a PNG file. Defaults to `False`.
+
+- **dpi** (*int, optional*):  
+  Resolution of the saved figure. Defaults to `300`.
+
+- **bbox_inches** (*str, optional*):  
+  Controls the amount of the figure to include when saving. Defaults to "tight".
+
+- **overlap_alpha** (*float, optional*):  
+  Transparency for the lines of treated and control groups. Defaults to `0.9`.
+
+- **simple_legend** (*bool, optional*):  
+  Whether to use a simplified legend (just "Control" and "Treated"). Defaults to `True`.
+
+#### Example
+```python
+from undidPyjl import stagethree as stagethree
+df = stagethree.plot_parallel_trends("C:\\Users\\User\\Filled Trends Data", 
+    combine=True, 
+    xticks = ["1990", "1992", "1994", "1996","1998"], 
+    date_format = "%Y",
+    control_colour = "grey",
+    treated_colour = "red",
+    treatment_indicator_linewidth = 1.5) 
+```
 
 ## Appendix
 
