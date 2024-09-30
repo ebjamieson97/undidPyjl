@@ -63,7 +63,7 @@ Ensure that dates are all entered in the same date format, a list of acceptable 
   List of end times for each silo. Defaults to an empty list.
 
 - **treatment_times** (*list of str, optional*):  
-  List of treatment times for each silo. Set treatment time to "control" for silos acting as controls. Defaults to an empty list.
+  List of treatment times for each silo. Set treatment time to "control" for silos which never receive treatment. Defaults to an empty list.
 
 - **covariates** (*list of str or bool, optional*):  
   Either a list of covariates to include in the analysis or `False` to omit covariates. Defaults to `False`.
